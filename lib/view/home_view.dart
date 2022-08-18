@@ -8,7 +8,8 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final counter = Provider.of<CounterViewModel>(context);
+    final counter = Provider.of<CounterViewModel>(context, listen: false);
+    debugPrint("build HomeView");
 
     return Scaffold(
       body: Center(
@@ -20,7 +21,12 @@ class HomeView extends StatelessWidget {
               onPressed: () => counter.increment(),
             ),
 
-            Text("${counter.counter}", style: const TextStyle(fontSize: 30),),
+            Consumer<CounterViewModel>(
+              builder: (context, model, child) {
+                debugPrint("build Consumer");
+                return Text("${model.counter}", style: const TextStyle(fontSize: 30),);
+              }
+            ),
 
             ElevatedButton(
               child: const Text("-1", style: TextStyle(color: Colors.redAccent, fontSize: 25),),
