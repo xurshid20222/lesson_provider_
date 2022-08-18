@@ -8,9 +8,40 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // final counter = Provider.of<CounterViewModel>(context);
     return ChangeNotifierProvider(
-        create: (BuildContext context) => CounterViewModel(),
-        child: const HomeView()
+      create: (BuildContext context) => CounterViewModel(),
+      builder: (context, child) {
+        final counter = Provider.of<CounterViewModel>(context);
+        return Scaffold(
+          body: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  child: const Text(
+                    "+1",
+                    style: TextStyle(color: Colors.greenAccent, fontSize: 25),
+                  ),
+                  onPressed: () => counter.increment(),
+                ),
+                Text(
+                  "${counter.counter}",
+                  style: const TextStyle(fontSize: 30),
+                ),
+                ElevatedButton(
+                  child: const Text(
+                    "-1",
+                    style: TextStyle(color: Colors.redAccent, fontSize: 25),
+                  ),
+                  onPressed: () => counter.decrement(),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
