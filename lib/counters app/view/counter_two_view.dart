@@ -21,6 +21,10 @@ class CounterTwoView extends StatelessWidget {
 
           Selector<CounterViewModel, int>(
             selector: (context, model) => model.counterModel.counterTwo,
+            shouldRebuild: (previous, next) {
+              debugPrint("previous: $previous, next: $next");
+              return (previous != next) && next >= 0;
+            },
             builder: (context, counterTwo, child) {
               debugPrint("Selector: CounterTwoView rebuild");
               return Text("two: $counterTwo", style: const TextStyle(fontSize: 30),);

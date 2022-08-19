@@ -9,7 +9,7 @@ class CounterOneView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    var counterModel = Provider.of<CounterViewModel>(context, listen: false);
+    var counterModel = context.read<CounterViewModel>();
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

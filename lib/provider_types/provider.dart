@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
 
 class MyModel {
   String someValue = 'Hello';
+
   void doSomething() {
     someValue = 'Goodbye';
     debugPrint(someValue);
