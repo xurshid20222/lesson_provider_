@@ -19,11 +19,12 @@ class CounterOneView extends StatelessWidget {
             onPressed: () => counterModel.oneIncrement(),
           ),
 
-          Consumer<CounterViewModel>(
-              builder: (context, model, child) {
-                debugPrint("Consumer: CounterOneView rebuild");
-                return Text("one: ${model.counterModel.counterOne}", style: const TextStyle(fontSize: 30),);
-              }
+          Selector<CounterViewModel, int>(
+            selector: (context, model) => model.counterModel.counterOne,
+            builder: (context, counterOne, child) {
+              debugPrint("Selector: CounterOneView rebuild");
+              return Text("one: $counterOne", style: const TextStyle(fontSize: 30),);
+            },
           ),
 
           ElevatedButton(

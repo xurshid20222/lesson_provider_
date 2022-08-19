@@ -19,11 +19,12 @@ class CounterTwoView extends StatelessWidget {
             onPressed: () => counterModel.twoIncrement(),
           ),
 
-          Consumer<CounterViewModel>(
-              builder: (context, model, child) {
-                debugPrint("Consumer: CounterTwoView rebuild");
-                return Text("two: ${model.counterModel.counterTwo}", style: const TextStyle(fontSize: 30),);
-              }
+          Selector<CounterViewModel, int>(
+            selector: (context, model) => model.counterModel.counterTwo,
+            builder: (context, counterTwo, child) {
+              debugPrint("Selector: CounterTwoView rebuild");
+              return Text("two: $counterTwo", style: const TextStyle(fontSize: 30),);
+            },
           ),
 
           ElevatedButton(
