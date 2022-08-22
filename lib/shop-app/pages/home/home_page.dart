@@ -57,6 +57,7 @@ class HomePage extends StatelessWidget {
           body: ListView.builder(
             padding: const EdgeInsets.all(15),
             itemCount: homeProvider.categories.length,
+            shrinkWrap: true,
             itemBuilder: (context, index) {
               return CategoryView(category: homeProvider.categories[index]);
             },
