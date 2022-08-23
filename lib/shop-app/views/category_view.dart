@@ -33,12 +33,15 @@ class CategoryView extends StatelessWidget {
               ),
 
               // #see_all
-              const Text(
-                "See all",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.blueAccent),
+              GestureDetector(
+                onTap: () => homeProvider.openProductsPage(context: context, id: category.id),
+                child: const Text(
+                  "See all",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.blueAccent),
+                ),
               ),
             ],
           ),
@@ -64,57 +67,60 @@ class CategoryView extends StatelessWidget {
                           // #image
                           Expanded(
                             flex: 16,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(product.images[0]),
-                                  fit: BoxFit.contain,
+                            child: GestureDetector(
+                              onTap: () => homeProvider.openDetailPage(context: context, product: product),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(product.images[0]),
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          borderRadius: BorderRadius.circular(25),
-                                        ),
-                                        child: const Icon(
-                                          CupertinoIcons.heart,
-                                          color: Colors.black,
-                                          size: 27.5,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey.shade200,
+                                            borderRadius: BorderRadius.circular(25),
+                                          ),
+                                          child: const Icon(
+                                            CupertinoIcons.heart,
+                                            color: Colors.black,
+                                            size: 27.5,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  product.discount != null
-                                      ? Expanded(
-                                          child: Align(
-                                            alignment: Alignment.bottomLeft,
-                                            child: Container(
-                                              padding: const EdgeInsets.all(5),
-                                              transform:
-                                                  Matrix4.rotationZ(-pi / 20),
-                                              decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius:
-                                                    BorderRadius.circular(7.5),
-                                              ),
-                                              child: Text(
-                                                "-${product.discount! * 100} %",
-                                                style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold),
+                                    product.discount != null
+                                        ? Expanded(
+                                            child: Align(
+                                              alignment: Alignment.bottomLeft,
+                                              child: Container(
+                                                padding: const EdgeInsets.all(5),
+                                                transform:
+                                                    Matrix4.rotationZ(-pi / 20),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(7.5),
+                                                ),
+                                                child: Text(
+                                                  "-${product.discount! * 100} %",
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink(),
-                                ],
+                                          )
+                                        : const SizedBox.shrink(),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
