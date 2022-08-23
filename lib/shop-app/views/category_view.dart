@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lesson_provider/shop-app/models/category_model.dart';
 import 'package:lesson_provider/shop-app/models/product_model.dart';
 import 'package:lesson_provider/shop-app/pages/home/home_provider.dart';
+import 'package:lesson_provider/shop-app/pages/order/order_provider.dart';
 import 'package:provider/provider.dart';
 
 class CategoryView extends StatelessWidget {
@@ -167,16 +168,25 @@ class CategoryView extends StatelessWidget {
                             flex: 4,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 5),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // TODO: write your code
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.grey.shade200,
-                                  elevation: 0,
-                                  minimumSize: const Size(double.infinity, 30)
-                                ),
-                                child: const Text("Add to cart", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),),
+                              child: Consumer<OrderProvider>(
+                                builder: (context, provider, child) {
+                                  bool isBooking = provider.checkProduct(product);
+                                  return ElevatedButton(
+                                    onPressed: () {
+                                      if(isBooking) {
+                                        provider.removeToCart(product);
+                                      } else {
+                                        provider.addToCart(product);
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: isBooking ? Colors.red.shade600 : Colors.green.shade600,
+                                      elevation: 0,
+                                      minimumSize: const Size(double.infinity, 30)
+                                    ),
+                                    child: Text("${!isBooking ? "Add" : "Remove"} to cart", style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
+                                  );
+                                }
                               ),
                             ),
                           ),

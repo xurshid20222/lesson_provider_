@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lesson_provider/shop-app/pages/history/history_page.dart';
 import 'package:lesson_provider/shop-app/pages/home/home_page.dart';
 import 'package:lesson_provider/shop-app/pages/main/main_provider.dart';
+import 'package:lesson_provider/shop-app/pages/order/order_provider.dart';
 import 'package:lesson_provider/shop-app/pages/profile/profile_page.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,6 @@ class MainPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MainProvider(),
       builder: (context, widget) {
-
         var mainProvider = Provider.of<MainProvider>(context, listen: false);
 
         return Scaffold(

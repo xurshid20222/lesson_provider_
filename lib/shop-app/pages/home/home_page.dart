@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lesson_provider/shop-app/pages/home/home_provider.dart';
+import 'package:lesson_provider/shop-app/pages/order/order_provider.dart';
 import 'package:lesson_provider/shop-app/views/category_view.dart';
 import 'package:provider/provider.dart';
 
@@ -42,9 +43,9 @@ class HomePage extends StatelessWidget {
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        child: Consumer<HomeProvider>(
-                          builder: (context, home, child) {
-                            return Text(home.orderNumber.toString(), style: const TextStyle(color: Colors.white),);
+                        child: Consumer<OrderProvider>(
+                          builder: (context, order, child) {
+                            return Text(order.orderNumber.toString(), style: const TextStyle(color: Colors.white),);
                           }
                         ),
                       )

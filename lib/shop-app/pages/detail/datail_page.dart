@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lesson_provider/shop-app/models/product_model.dart';
 import 'package:lesson_provider/shop-app/pages/detail/detail_provider.dart';
+import 'package:lesson_provider/shop-app/pages/order/order_provider.dart';
 import 'package:provider/provider.dart';
 
 class DetailPage extends StatelessWidget {
@@ -13,7 +14,12 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => DetailProvider(product: product),
-      child: Consumer<DetailProvider>(builder: (context, detail, child) {
+      builder: (context, child) {
+
+        var detail = Provider.of<DetailProvider>(context, listen: false);
+        var orderProvider = Provider.of<OrderProvider>(context, listen: false);
+        var order = orderProvider.getOrder(product);
+
         return Scaffold(
           backgroundColor: Colors.white,
           body: Column(
@@ -41,7 +47,7 @@ class DetailPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: List.generate(
                           product.images.length,
-                          (index) {
+                              (index) {
                             return AnimatedContainer(
                               margin: const EdgeInsets.symmetric(horizontal: 2),
                               duration: const Duration(milliseconds: 200),
@@ -173,26 +179,27 @@ class DetailPage extends StatelessWidget {
                           children: [
                             // #minus
                             GestureDetector(
-                              onTap: () {
-                                // TODO write code for minus
-                              },
+                              onTap: () => orderProvider.minus(order),
                               child: const Icon(CupertinoIcons.minus),
                             ),
 
                             // #quantity
-                            const Text(
-                              "0",
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black),
+                            Consumer<OrderProvider>(
+                                builder: (context, provider, child) {
+                                  order = provider.getOrder(product);
+                                  return Text(
+                                    order.quantity.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black),
+                                  );
+                                }
                             ),
 
                             // #plus
                             GestureDetector(
-                              onTap: () {
-                                // TODO write code for minus
-                              },
+                              onTap: () => orderProvider.plus(order),
                               child: const Icon(CupertinoIcons.plus),
                             ),
                           ],
@@ -216,47 +223,61 @@ class DetailPage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             "Total price",
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.black,
                             ),
                           ),
-                          Text(
-                            "0 sum",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
+                          Consumer<OrderProvider>(
+                            builder: (context, provider, child) {
+                              order = provider.getOrder(product);
+                              return Text(
+                                "${order.total} sum",
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              );
+                            }
                           ),
                         ],
                       ),
-                      MaterialButton(
-                        onPressed: () {
-                          // TODO write code
-                        },
-                        color: Colors.black,
-                        height: 55,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(27.5)
-                        ),
-                        minWidth: MediaQuery.of(context).size.width * 0.6,
-                        child: const Text(
-                          "Add to Cart",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                          ),
-                        ),
+                      Consumer<OrderProvider>(
+                        builder: (context, provider, child) {
+                          order = orderProvider.getOrder(product);
+                          return MaterialButton(
+                            onPressed: () {
+                              if(order.quantity > 0) {
+                                provider.removeToCart(product, quantity: order.quantity);
+                              } else {
+                                provider.addToCart(product);
+                              }
+                            },
+                            color: Colors.black,
+                            height: 55,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(27.5)
+                            ),
+                            minWidth: MediaQuery.of(context).size.width * 0.6,
+                            child: Text(
+                              "${order.quantity == 0 ? "Add" : "Remove"} to cart",
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
+                              ),
+                            ),
+                          );
+                        }
                       ),
                     ],
                   ),
@@ -265,7 +286,7 @@ class DetailPage extends StatelessWidget {
             ],
           ),
         );
-      }),
+      },
     );
   }
 }

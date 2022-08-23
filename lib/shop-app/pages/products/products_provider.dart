@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lesson_provider/shop-app/models/category_model.dart';
 import 'package:lesson_provider/shop-app/models/product_model.dart';
+import 'package:lesson_provider/shop-app/pages/detail/datail_page.dart';
 import 'package:lesson_provider/shop-app/services/mock_data.dart';
 
 class ProductsProvider extends ChangeNotifier {
@@ -8,7 +9,10 @@ class ProductsProvider extends ChangeNotifier {
   late Category category;
   List<Product> products = [];
 
-  ProductsProvider({required this.categoryId});
+  ProductsProvider({required this.categoryId}) {
+    getCategory();
+    getProducts();
+  }
 
   void getCategory() {
     category = Category.fromJson(categoriesMock.firstWhere((category) => categoryId == category["id"]));
@@ -18,5 +22,13 @@ class ProductsProvider extends ChangeNotifier {
     products = productsMock
         .where((product) => product["categoryId"] == categoryId)
         .map((product) => Product.fromJson(product)).toList();
+  }
+
+  void onTapBasket() {
+    // todo write code
+  }
+
+  void openDetailPage({required BuildContext context, required Product product}) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(product: product)));
   }
 }
