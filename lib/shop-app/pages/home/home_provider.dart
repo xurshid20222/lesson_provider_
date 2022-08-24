@@ -8,7 +8,10 @@ import 'package:lesson_provider/shop-app/services/mock_data.dart';
 class HomeProvider extends ChangeNotifier {
   int orderNumber = 0;
   List<Category> categories = [];
-  List<Product> products = [];
+
+  HomeProvider() {
+    getAllCategories();
+  }
 
   void onTapBasket() {
     // TODO: write your code
@@ -16,19 +19,18 @@ class HomeProvider extends ChangeNotifier {
 
   void getAllCategories() {
     categories = categoriesMock.map((category) => Category.fromJson(category)).toList();
+    for(int i = 0; i < categories.length; i++) {
+      categories[i].products = productsMock
+          .where((product) => product["categoryId"] == categories[i].id)
+          .map((product) => Product.fromJson(product)).toList();
+    }
   }
 
-  void getProducts(String categoryId) {
-    products = productsMock
-        .where((product) => product["categoryId"] == categoryId)
-        .map((product) => Product.fromJson(product)).toList();
-  }
-
-  int get gridSize {
-    if(products.length >= 4) {
+  int getGridSize(Category category) {
+    if(category.products.length >= 4) {
       return 4;
     } else {
-      return products.length;
+      return category.products.length;
     }
   }
 

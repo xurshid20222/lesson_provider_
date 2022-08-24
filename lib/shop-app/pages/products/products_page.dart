@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lesson_provider/shop-app/models/product_model.dart';
@@ -16,7 +15,8 @@ class ProductsPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => ProductsProvider(categoryId: categoryId),
       builder: (context, child) {
-        var productsProvider = Provider.of<ProductsProvider>(context);
+        var productsProvider = Provider.of<ProductsProvider>(context, listen: false);
+
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -61,9 +61,9 @@ class ProductsPage extends StatelessWidget {
               mainAxisSpacing: 5,
               childAspectRatio: 3 / 5,
             ),
-            itemCount: productsProvider.products.length,
+            itemCount: productsProvider.category.products.length,
             itemBuilder: (context, index) {
-              Product product = productsProvider.products[index];
+              Product product = productsProvider.category.products[index];
               return Card(
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),

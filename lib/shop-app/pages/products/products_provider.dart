@@ -7,7 +7,6 @@ import 'package:lesson_provider/shop-app/services/mock_data.dart';
 class ProductsProvider extends ChangeNotifier {
   final String categoryId;
   late Category category;
-  List<Product> products = [];
 
   ProductsProvider({required this.categoryId}) {
     getCategory();
@@ -19,7 +18,7 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   void getProducts() {
-    products = productsMock
+    category.products = productsMock
         .where((product) => product["categoryId"] == categoryId)
         .map((product) => Product.fromJson(product)).toList();
   }

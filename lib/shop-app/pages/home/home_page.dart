@@ -15,8 +15,6 @@ class HomePage extends StatelessWidget {
       builder: (context, widget) {
 
         var homeProvider = Provider.of<HomeProvider>(context, listen: false);
-        // get all data in server or local
-        homeProvider.getAllCategories();
 
         return Scaffold(
           backgroundColor: Colors.white,

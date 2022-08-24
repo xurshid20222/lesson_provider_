@@ -43,23 +43,27 @@ class DetailPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 25),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: List.generate(
-                          product.images.length,
-                              (index) {
-                            return AnimatedContainer(
-                              margin: const EdgeInsets.symmetric(horizontal: 2),
-                              duration: const Duration(milliseconds: 200),
-                              height: 7.5,
-                              width: index == detail.currentIndex ? 20 : 7.5,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(3.75),
-                              ),
-                            );
-                          },
-                        ),
+                      child: Consumer<DetailProvider>(
+                        builder: (context, provider, child) {
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(
+                              product.images.length,
+                                  (index) {
+                                return AnimatedContainer(
+                                  margin: const EdgeInsets.symmetric(horizontal: 2),
+                                  duration: const Duration(milliseconds: 200),
+                                  height: 7.5,
+                                  width: index == detail.currentIndex ? 20 : 7.5,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(3.75),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
                       ),
                     ),
                   ],
@@ -239,12 +243,12 @@ class DetailPage extends StatelessWidget {
                           Consumer<OrderProvider>(
                             builder: (context, provider, child) {
                               order = provider.getOrder(product);
-                              return Text(
-                                "${order.total} sum",
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                              return Flexible(
+                                child: RichText(
+                                  overflow: TextOverflow.ellipsis,
+                                  text: TextSpan(
+                                      style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
+                                      text:"${order.total}"),
                                 ),
                               );
                             }

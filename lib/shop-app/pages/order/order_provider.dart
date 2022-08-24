@@ -43,7 +43,7 @@ class OrderProvider extends ChangeNotifier {
 
   Order getOrder(Product product) {
     if(orders.orders.isEmpty) return Order(product: product, total: 0.0, quantity: 0);
-    Order order = orders.orders.firstWhere((order) => order.product.id == product.id);
+    Order order = orders.orders.firstWhere((order) => order.product.id == product.id, orElse: () => Order(product: product, total: 0.0, quantity: 0));
     return order;
   }
 

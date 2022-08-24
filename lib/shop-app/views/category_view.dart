@@ -12,11 +12,10 @@ class CategoryView extends StatelessWidget {
   final Category category;
 
   const CategoryView({Key? key, required this.category}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     var homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    homeProvider.getProducts(category.id);
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -53,9 +52,9 @@ class CategoryView extends StatelessWidget {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: homeProvider.gridSize,
+              itemCount: homeProvider.getGridSize(category),
               itemBuilder: (context, index) {
-                Product product = homeProvider.products[index];
+                Product product = category.products[index];
                 return AspectRatio(
                   aspectRatio: 3 / 5,
                   child: Card(
