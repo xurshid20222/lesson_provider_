@@ -33,6 +33,13 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeAllOrders(){
+    orders.total = 0.0;
+    orders.orders = [];
+    notifyListeners();
+  }
+
+
   bool checkProduct(Product product) {
     if(orders.orders.isEmpty) return false;
 
@@ -74,5 +81,9 @@ class OrderProvider extends ChangeNotifier {
       orders.orders[index] = order;
       notifyListeners();
     }
+  }
+
+  void pagePop(BuildContext context){
+    Navigator.pop(context);
   }
 }

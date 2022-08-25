@@ -4,6 +4,8 @@ import 'package:lesson_provider/shop-app/models/product_model.dart';
 import 'package:lesson_provider/shop-app/pages/detail/datail_page.dart';
 import 'package:lesson_provider/shop-app/services/mock_data.dart';
 
+import '../order/order_page.dart';
+
 class ProductsProvider extends ChangeNotifier {
   final String categoryId;
   late Category category;
@@ -23,9 +25,10 @@ class ProductsProvider extends ChangeNotifier {
         .map((product) => Product.fromJson(product)).toList();
   }
 
-  void onTapBasket() {
-    // todo write code
+  void onTapBasket({required BuildContext context,}) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderPage()));
   }
+
 
   void openDetailPage({required BuildContext context, required Product product}) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(product: product)));

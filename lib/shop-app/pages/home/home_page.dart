@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: GestureDetector(
-                  onTap: homeProvider.onTapBasket,
+                  onTap: () => homeProvider.onTapBasket(context: context),
                   child: Stack(
                     alignment: Alignment.topRight,
                     children: [

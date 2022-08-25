@@ -25,7 +25,7 @@ class ProductsPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: GestureDetector(
-                  onTap: productsProvider.onTapBasket,
+                  onTap: () => productsProvider.onTapBasket(context: context),
                   child: Stack(
                     alignment: Alignment.topRight,
                     children: [

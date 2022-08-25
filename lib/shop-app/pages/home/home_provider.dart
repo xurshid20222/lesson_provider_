@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lesson_provider/shop-app/models/category_model.dart';
 import 'package:lesson_provider/shop-app/models/product_model.dart';
 import 'package:lesson_provider/shop-app/pages/detail/datail_page.dart';
+import 'package:lesson_provider/shop-app/pages/order/order_page.dart';
 import 'package:lesson_provider/shop-app/pages/products/products_page.dart';
 import 'package:lesson_provider/shop-app/services/mock_data.dart';
 
@@ -13,8 +14,8 @@ class HomeProvider extends ChangeNotifier {
     getAllCategories();
   }
 
-  void onTapBasket() {
-    // TODO: write your code
+  void onTapBasket({required BuildContext context,}) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderPage()));
   }
 
   void getAllCategories() {
